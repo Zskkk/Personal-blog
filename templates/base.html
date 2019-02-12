@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Kun Blog {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure-min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/grids-responsive-min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"/>
+</head>
+<body>
+<!--左侧边栏 开始-->
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header" style="text-align: center">
+            <form method="POST" action="search_article/">
+                {% csrf_token %}
+                <div style="background: #F9F0DA;">
+                <input class="search " name="search" type="text" placeholder="请输入你要搜索的内容" aria-label="Search" style="background: transparent;margin-top: -250px;margin-left: -130px;position: absolute; border: 2px solid #1c9ac5;border-radius: 10px;height: 31px">
+                <button type="submit" class="btn" style="margin-top: -250px;margin-left: 60px;position: absolute;height: 31px;background: #20c555;border-radius: 10px;width: 60px;">搜索</button>
+                </div>
+                <br>
+                <a style="margin-top: -240px;margin-left: -130px;position: absolute;text-decoration: none">{{ error_msg }}</a>
+            </form>
+            <div>
+                <img style="margin-top: -130px;margin-left:-50px;width:100px; height:100px; border-radius:100px; position: absolute" src="/static/image/timg.jpg"/>
+            </div>
+            <h1 class="brand-title"><a href="{% url 'home' %}" style="text-decoration: none">坤少的博客</a></h1>
+            <br>
+            <h2 class="brand-tagline">爱学习，爱生活，爱自己。</h2>
+            <br>
+            <h2 class="brand-title" ><a style="text-decoration: none;float: left" >分类：</a></h2>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        {% for category in category_list %}
+                            <a class="pure-button" href="{% url 'category_menu' id=category.id %}" style="text-decoration: none">{{ category }}</a>
+                        {% endfor %}&nbsp;
+                    </li>
+                </ul>
+                <br>
+                <br>
+                <ul class="nav-list">
+                    <li>
+                        <a href="#" style="text-decoration: none">
+                            <i class="fa fa-qq"  style="font-size: 30px" aria-hidden="true" title="QQ"></i>
+                        </a>
+                        &nbsp;
+                        <a href="#" style="text-decoration: none">
+                            <i class="fa fa-weixin" style="font-size: 30px" aria-hidden="true" title="微信"></i>
+                        </a>
+                        &nbsp;
+                        <a href="#" style="text-decoration: none">
+                            <i class="fa fa-envelope-o" style="font-size: 30px" aria-hidden="true" title="邮箱"></i>
+                        </a>
+                        &nbsp;
+                        <a href="#" style="text-decoration: none" title="微博">
+                            <i class="fa fa-weibo" style="font-size: 34px" aria-hidden="true"></i>
+                        </a>
+                        &nbsp;
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!--左侧边栏 结束-->
+    <!--文章列表 开始-->
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <!--文章列表 结束-->
+</div>
+</body>
+</html>
